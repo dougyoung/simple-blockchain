@@ -1,16 +1,23 @@
+import sys
 import time
 
 from block import Block
 from crypto import Crypto
 
 class Blockchain():
-    def __init__(self):
+    def __init__(self, difficulty=1e70):
+        # Blockchain begins with only the genesis block
+        # https://en.bitcoin.it/wiki/Genesis_block
         self.blockchain = [self.__class__.get_genesis_block()]
+
+        # Statically defined difficulty measure for simplicity
+        # https://en.bitcoin.it/wiki/Difficulty
+        self.difficulty = difficulty
 
     @staticmethod
     def get_genesis_block():
-        hash = '37c83e9263e5f292ee53fdf55b47de26bc372086cf2f9bb8d7f1f6ab594c5202'
-        return Block(0, '0', 1506721343, "All journeys begin with a single step", hash)
+        hash = '82afe91e2a5302c0fb9fd78ec22f57c00566cdd1c7b3c1a81387dc74c6e19da4'
+        return Block(0, None, 1506721343, "All journeys begin with a single step", hash, 0)
 
     @staticmethod
     def valid_block(previous_block, block):
@@ -41,9 +48,12 @@ class Blockchain():
         previous_block = self.get_latest_block()
         index = previous_block.index + 1
         previous_hash = previous_block.hash
-        timestamp = int(time.time())
-        hash = Crypto.calculate_hash(index, previous_hash, timestamp, payload)
-        return Block(index, previous_hash, timestamp, payload, hash)
+
+        for nonce in range(0, sys.maxsize):
+            timestamp = int(time.time())
+            hash = Crypto.calculate_hash(index, previous_hash, timestamp, payload, nonce)
+            if int(hash, 16) < self.difficulty:
+                return Block(index, previous_hash, timestamp, payload, nonce, hash)
 
     def get_latest_block(self):
         return self.blockchain[-1]
