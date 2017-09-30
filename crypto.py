@@ -1,6 +1,6 @@
 import hashlib
 
-class Crypto():
+class Crypto:
     # Calculate the hash given:
     # 1. Block index
     # 2. Previous block's hash
