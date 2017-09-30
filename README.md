@@ -18,6 +18,12 @@ Python 3.6.x
 # python3 run.py [difficulty]
 ```
 
+### How to run tests
+
+```bash
+# python3 tests.py
+```
+
 #### Difficulty
 
 Difficulty defines the probability of finding a valid hash for a given block. The smaller the difficulty the more difficult it
@@ -32,9 +38,10 @@ Default is `1e71`. Increase this number if the proof-of-work portion of the prog
 This project represents a single node in a networkless proof-of-work based cryptocurrency system. As such it does not cover various concepts:
 
 1. Peer networking and message passing
-2. Best chain detection and replacement
+2. Transaction system
 3. More sophisticated consensus rules validation
-4. Chain persistence
+4. Best chain detection and replacement
+5. Chain persistence
 
 ## More reading
 
