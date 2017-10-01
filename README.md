@@ -21,7 +21,7 @@ Python 3.6.x
 ### How to run tests
 
 ```bash
-# python3 tests.py
+# python3 tests.py -b
 ```
 
 #### Difficulty
